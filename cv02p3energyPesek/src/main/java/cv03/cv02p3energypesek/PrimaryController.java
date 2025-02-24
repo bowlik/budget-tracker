@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.application.Platform;
+import javafx.scene.layout.GridPane;
 
 public class PrimaryController {
 
@@ -17,11 +18,11 @@ public class PrimaryController {
     @FXML private Slider sliderPocetZaloh;
     @FXML private TextField txtVyseZalohy;
     @FXML private Text txtVysledek, txtNedoplatekPřeplatek;
+    @FXML private GridPane panelVT, panelNT;
 
     @FXML
     private void calculate() {
         int months = (int) sliderMonths.getValue();
-
 
         double spotrebaVT = 0, cenaDodavkaVT = 0, cenaDistribuceVT = 0;
         if (checkVysokyTarif.isSelected()) {
@@ -94,82 +95,98 @@ public class PrimaryController {
 
     @FXML
     public void handleCheckBoxVT() {
-        if (checkVysokyTarif.isSelected()) {
-            txtSpotrebaVT.setDisable(false);
-            txtCenaDodavkaVT.setDisable(false);
-            txtCenaDistribuceVT.setDisable(false);
-        } else {
-            txtSpotrebaVT.setDisable(true);
-            txtCenaDodavkaVT.setDisable(true);
-            txtCenaDistribuceVT.setDisable(true);
-        }
+        toggleVysokyTarifFields();
     }
 
     @FXML
     public void handleCheckBoxNT() {
-        if (checkNizkyTarif.isSelected()) {
-            txtSpotrebaNT.setDisable(false);
-            txtCenaDodavkaNT.setDisable(false);
-            txtCenaDistribuceNT.setDisable(false);
-        } else {
-            txtSpotrebaNT.setDisable(true);
-            txtCenaDodavkaNT.setDisable(true);
-            txtCenaDistribuceNT.setDisable(true);
-        }
+        toggleNizkyTarifFields();
     }
 
+    private void toggleVysokyTarifFields() {
+        boolean isChecked = checkVysokyTarif.isSelected();
+        panelVT.setDisable(!isChecked);
+        txtSpotrebaVT.setDisable(!isChecked);
+        txtCenaDodavkaVT.setDisable(!isChecked);
+        txtCenaDistribuceVT.setDisable(!isChecked);
+    }
+
+    private void toggleNizkyTarifFields() {
+        boolean isChecked = checkNizkyTarif.isSelected();
+        panelNT.setDisable(!isChecked);
+        txtSpotrebaNT.setDisable(!isChecked);
+        txtCenaDodavkaNT.setDisable(!isChecked);
+        txtCenaDistribuceNT.setDisable(!isChecked);
+    }
+    
     @FXML
-    public void handleCalculate(ActionEvent event) {
+private void handleCalculate(ActionEvent event) {
+    int months = (int) sliderMonths.getValue();
+
+    double spotrebaVT = 0, cenaDodavkaVT = 0, cenaDistribuceVT = 0;
+    if (checkVysokyTarif.isSelected()) {
         try {
-            double pocetMesicu = sliderMonths.getValue();
-            double spotrebaVT = Double.parseDouble(txtSpotrebaVT.getText());
-            double cenaDodavkaVT = Double.parseDouble(txtCenaDodavkaVT.getText());
-            double cenaDistribuceVT = Double.parseDouble(txtCenaDistribuceVT.getText());
-            double spotrebaNT = Double.parseDouble(txtSpotrebaNT.getText());
-            double cenaDodavkaNT = Double.parseDouble(txtCenaDodavkaNT.getText());
-            double cenaDistribuceNT = Double.parseDouble(txtCenaDistribuceNT.getText());
-
-            double celkovaCenaVT = (spotrebaVT * cenaDodavkaVT + spotrebaVT * cenaDistribuceVT) * pocetMesicu;
-            double celkovaCenaNT = (spotrebaNT * cenaDodavkaNT + spotrebaNT * cenaDistribuceNT) * pocetMesicu;
-
-            double celkovaCena = 0;
-            if (checkVysokyTarif.isSelected()) {
-                celkovaCena += celkovaCenaVT;
-            }
-            if (checkNizkyTarif.isSelected()) {
-                celkovaCena += celkovaCenaNT;
-            }
-
-            double dan = Double.parseDouble(txtDan.getText());
-            double mesicniPoplatek = Double.parseDouble(txtMesicniPoplatek.getText());
-            double rezervace = Double.parseDouble(txtPoplatekRezervace.getText());
-            double systemoveSluzby = Double.parseDouble(txtSystemoveSluzby.getText());
-            double kvet = Double.parseDouble(txtKVET.getText());
-            double ote = Double.parseDouble(txtOTE.getText());
-
-            celkovaCena += dan + mesicniPoplatek * pocetMesicu + rezervace + systemoveSluzby + kvet + ote;
-
-            double zaplaceno = Double.parseDouble(txtVyseZalohy.getText()) * sliderPocetZaloh.getValue();
-            double nedoplatek = zaplaceno - celkovaCena;
-
-            celkovaCena = Math.round(celkovaCena);
-            nedoplatek = Math.round(nedoplatek);
-
-            if (nedoplatek < 0) {
-                txtVysledek.setText("Nedoplatek: " + (-nedoplatek) + " Kč");
-                txtVysledek.setStyle("-fx-text-fill: red;");
-            } else {
-                txtVysledek.setText("Přeplatek: " + nedoplatek + " Kč");
-                txtVysledek.setStyle("-fx-text-fill: green;");
-            }
+            spotrebaVT = Double.parseDouble(txtSpotrebaVT.getText());
+            cenaDodavkaVT = Double.parseDouble(txtCenaDodavkaVT.getText());
+            cenaDistribuceVT = Double.parseDouble(txtCenaDistribuceVT.getText());
         } catch (NumberFormatException e) {
-            txtVysledek.setText("Chyba ve vstupu");
-            txtVysledek.setStyle("-fx-text-fill: red;");
+            showAlert("Chyba", "Neplatný formát hodnoty pro vysoký tarif.");
+            return;
         }
     }
+
+    double spotrebaNT = 0, cenaDodavkaNT = 0, cenaDistribuceNT = 0;
+    if (checkNizkyTarif.isSelected()) {
+        try {
+            spotrebaNT = Double.parseDouble(txtSpotrebaNT.getText());
+            cenaDodavkaNT = Double.parseDouble(txtCenaDodavkaNT.getText());
+            cenaDistribuceNT = Double.parseDouble(txtCenaDistribuceNT.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Chyba", "Neplatný formát hodnoty pro nízký tarif.");
+            return;
+        }
+    }
+
+    double dan = parseDouble(txtDan);
+    double mesicniPoplatek = parseDouble(txtMesicniPoplatek);
+    double poplatekRezervace = parseDouble(txtPoplatekRezervace);
+    double systemoveSluzby = parseDouble(txtSystemoveSluzby);
+    double kvetOzeDz = parseDouble(txtKVET);
+    double ote = parseDouble(txtOTE);
+
+    double cenaVT = (spotrebaVT * (cenaDodavkaVT + cenaDistribuceVT)) * months;
+    double cenaNT = (spotrebaNT * (cenaDodavkaNT + cenaDistribuceNT)) * months;
+    double celkovaCena = cenaVT + cenaNT;
+
+    double celkovePoplatky = dan + mesicniPoplatek * months + poplatekRezervace + systemoveSluzby + kvetOzeDz + ote;
+
+    celkovaCena += celkovePoplatky;
+    celkovaCena = Math.round(celkovaCena); // Zaokrouhlení na celé koruny
+
+    double zaplaceneZalohy = sliderPocetZaloh.getValue() * parseDouble(txtVyseZalohy);
+    double nedoplatek = zaplaceneZalohy - celkovaCena;
+
+    txtVysledek.setText("Celková cena: " + celkovaCena + " Kč");
+    if (nedoplatek < 0) {
+        txtNedoplatekPřeplatek.setText("Nedoplatek: " + Math.abs(nedoplatek) + " Kč");
+        txtNedoplatekPřeplatek.setFill(Color.RED);
+    } else {
+        txtNedoplatekPřeplatek.setText("Přeplatek: " + Math.abs(nedoplatek) + " Kč");
+        txtNedoplatekPřeplatek.setFill(Color.GREEN);
+    }
+}
+
 
     @FXML
     public void handleClose(ActionEvent event) {
         Platform.exit();
+    }
+
+    public void initialize() {
+        checkVysokyTarif.setOnAction(e -> toggleVysokyTarifFields());
+        checkNizkyTarif.setOnAction(e -> toggleNizkyTarifFields());
+
+        toggleVysokyTarifFields();
+        toggleNizkyTarifFields();
     }
 }
