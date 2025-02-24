@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cv02</groupId>
-    <artifactId>cv02POG1</artifactId>
+    <groupId>cv03</groupId>
+    <artifactId>cv03POG1</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

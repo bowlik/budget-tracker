@@ -12,16 +12,16 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cv03.cv02p3energypesek.PrimaryController">
+<AnchorPane prefHeight="877.0" prefWidth="400.0" scaleShape="false" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cv03.cv02p3energypesek.PrimaryController">
     <children>
         <VBox alignment="TOP_LEFT" prefWidth="400" spacing="10">
             <children>
-                <TitledPane collapsible="false" expanded="true" text="Vyúčtování ceny za elektrickou energii">
+                <TitledPane expanded="true" text="Vyúčtování ceny za elektrickou energii">
                     <content>
                         <VBox spacing="10">
                             <GridPane hgap="10" vgap="10">
                                 <Label text="Počet měsíců:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <Slider majorTickUnit="1.0" max="12.0" min="1.0" minWidth="-Infinity" minorTickCount="1" prefWidth="200" showTickLabels="true" showTickMarks="true" value="1.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <Slider majorTickUnit="1.0" max="12.0" min="1.0" minWidth="-Infinity" minorTickCount="1" prefWidth="200" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                 <columnConstraints>
                                     <ColumnConstraints />
                                     <ColumnConstraints />
@@ -39,7 +39,7 @@
                                     <ColumnConstraints halignment="LEFT" prefWidth="50" />
                                 </columnConstraints>
                                 <Label text="Spotřeba VT" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <TextField fx:id="txtSpotrebaVT" prefWidth="120" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <TextField fx:id="txtSpotrebaVT" accessibleRole="CHECK_BOX" prefWidth="120" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                 <Label text="MWh" GridPane.columnIndex="2" GridPane.rowIndex="0" />
 
                                 <Label text="Cena za dodávku" GridPane.columnIndex="0" GridPane.rowIndex="1" />
@@ -81,7 +81,7 @@
                                 </rowConstraints>
                             </GridPane>
 
-                            <TitledPane collapsible="false" expanded="true" text="Další poplatky">
+                            <TitledPane expanded="true" text="Další poplatky">
                                 <content>
                                     <GridPane hgap="10" vgap="10">
                                         <columnConstraints>
@@ -124,7 +124,7 @@
                                 </content>
                             </TitledPane>
 
-                            <TitledPane collapsible="false" expanded="true" text="Zaplacené zálohy">
+                            <TitledPane expanded="true" text="Zaplacené zálohy">
                                 <content>
                                     <GridPane hgap="10" vgap="10">
                                         <columnConstraints>
@@ -133,7 +133,7 @@
                                             <ColumnConstraints halignment="LEFT" prefWidth="50" />
                                         </columnConstraints>
                                         <Label text="Počet záloh" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                        <Slider fx:id="sliderPocetZaloh" majorTickUnit="1.0" max="12.0" min="1.0" minWidth="-Infinity" minorTickCount="1" prefHeight="38.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <Slider fx:id="sliderPocetZaloh" majorTickUnit="1.0" max="12.0" min="1.0" minWidth="-Infinity" minorTickCount="1" prefHeight="38.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                                         <Label text="Výše zálohy:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                                         <TextField fx:id="txtVyseZalohy" prefWidth="120" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -166,7 +166,7 @@
                            <Label prefHeight="18.0" prefWidth="29.0" text="Kč" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         </children>
                      </GridPane>
-                     <TitledPane collapsible="false" prefHeight="126.0" prefWidth="379.0" text="Předpis záloh na delší období">
+                     <TitledPane prefHeight="126.0" prefWidth="379.0" text="Předpis záloh na delší období">
                        <content>
                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                               <children>
@@ -178,7 +178,7 @@
                                     </columnConstraints>
                                     <children>
                                        <Label text="Počet záloh" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                       <Slider fx:id="sliderPocetZaloh1" majorTickUnit="1.0" max="12.0" min="1.0" minWidth="-Infinity" minorTickCount="1" prefHeight="38.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" value="1.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                       <Slider fx:id="sliderPocetZaloh1" majorTickUnit="1.0" max="12.0" min="1.0" minWidth="-Infinity" minorTickCount="1" prefHeight="38.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                        <Label text="Výše zálohy:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                                        <Label text="Kč" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                        <Label text="0.00" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
